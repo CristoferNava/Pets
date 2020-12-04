@@ -3,13 +3,23 @@ import Form from './components/Form';
 import Appo from './components/Appo';
 
 function App() {
+  // appos in local storage
+  let apposInit = JSON.parse(localStorage.getItem('appos'));
+  if (!apposInit) {
+    apposInit = [];
+  }
+
   // State of the appos
-  const [appos, setAppos] = useState([]);
+  const [appos, setAppos] = useState(apposInit);
 
   // useEffect se ejecuta cuando el componente está listo pero también cuando
   // hay cambios en el state
   useEffect(() => {
-    console.log('Listo');
+    if (apposInit) {
+      localStorage.setItem('appos', JSON.stringify(appos));
+    } else {
+      localStorage.setItem('appos', JSON.stringify([]));
+    }
   }, [appos]); // Everytime the state of appos change useEffect executes
 
   const createAppo = appo => {
